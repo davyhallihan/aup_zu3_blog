@@ -1,0 +1,436 @@
+---
+title: 'Just a Microcontroller'
+pubDate: 2025-07-12
+description: 'How to configure the ZYNQ Ultrascale+ MPSoC hardware to be just a
+              simple microcontroller and then create the (obligatory) "Hello, World!"
+              software application.'
+author: 'Rosa Vergara'
+draft: false
+image:
+  url: ''
+  alt: ''
+tags: ["AUP-ZU3", "Getting Started", "Beginner"]
+---
+import Figure from '../../../components/Figure.astro';
+import vivadoOpen from './vivadoOpen.png';
+import projName from './projName.png';
+import projType from './projType.png';
+import projBoard from './projBoard.png';
+import projManager from './projManager.png';
+import designName from './designName.png';
+import zynqIP from './zynqIP.png';
+import blAuto from './blAuto.png';
+import zynqCon from './zynqCon.png';
+import customizeIP from './customizeIP.png';
+import ioConf from './ioConf.png';
+import advConf from './advConf.png';
+import createHDLWrapper from './createHDLWrapper.png';
+import createHDLWrapper2 from './createHDLWrapper2.png';
+import generateBit1 from './generateBit1.png';
+import generateBit2 from './generateBit2.png';
+import exportHW1 from './exportHW1.png';
+import exportHW2 from './exportHW2.png';
+import exportHW3 from './exportHW3.png';
+import openVitis from './openVitis.png';
+import platformComp from './platformComp.png';
+import importHW from './importHW.png';
+import platformOS from './platformOS.png';
+import appCreation from './appCreation.png';
+import appPlatform from './appPlatform.png';
+import appDomain from './appDomain.png';
+import appBuild from './appBuild.png';
+import appCreated from './appCreated.png';
+import appOut from './appOut.png';
+
+
+This XYZ-min is really just me turning the AUP-ZU3 into the world’s most
+over-qualified microcontroller. Nothing fancy in the PL, no accelerators, no
+custom IP—just one ARM core, one UART, and a “Hello, World!” to prove the
+toolchain is alive.
+
+## Objective
+
+Yes, it's overkill to use a ZU3EG to blink text at 115200 baud. But the real
+goals here are:
+
+* Ensure that necessary tools are installed correctly
+* Walk through the whole “blank chip → configured hardware → running application pipeline
+
+## Pre-Requisites
+
+Before diving in, you’ll need:
+
+* Vivado and Vitis installed.
+  [Digilent](https://digilent.com/reference/programmable-logic/guides/xilinx-unified-installer?srsltid=AfmBOoqHsLjnb-UDhLfLVTSXsuqDZhMdkZaMHyJhOJAkbgzS8-P4-A4o)
+  has a pretty friendly install write-up, follow that
+
+    * For board files see this [post](http://rcs.uncc.edu/~cmuntz/posts/aup-zu3/2-board-files/2-board-files/)
+
+* Your AUP-ZU3 board, two USB-C cables, and the
+  power adapter.
+
+
+<details>
+<summary>1. Viavdo Configuration</summary>
+<div class="content">
+
+1. Open Vivado
+
+    You can launch Vivado through the GUI, but for these notes I decided to go the
+    command-line route—it helps keep all the files contained in the project folder.
+
+    Here’s the exact sequence I used (Windows terminal):
+
+    ```cmd
+    cd aupzu3Proj\mcu\mcu_hw
+    # Source the environment setup
+    C:\Xilinx\Vivado\2024.2\settings64.bat
+    # Open vivado
+    vivado &
+    ```
+
+    You should get an output like this:
+    <Figure
+    src={vivadoOpen}
+    alt="Terminal window opening Vivado"
+    caption="Figure 1: Opening Vivado"
+    />
+    Vivado opens in the background.
+
+2. Create the new project 
+
+    With Vivado open, click Create Project (or File → Project → New). Just follow
+    the "New Project" window guide. 
+
+* Gave the project a short, simple name (long paths = pain later T_T)
+* Picked the same directory as the terminal session
+* Selected RTL project type
+* Chose the AUP-ZU3 board (4GB or 8GB—pick yours)
+* Then click Finish.
+    
+    <div class="figure-row">
+    <Figure
+        src={projName}
+        alt=" "
+        caption="Figure 2: Project Name"
+        width={300}
+    />
+    <Figure
+        src={projType}
+        alt=" "
+        caption="Figure 3: Project Type: Choose RTL Project Type"
+        width={200}
+    />
+    <Figure
+        src={projBoard}
+        alt=" "
+        caption="Figure 4: Default Part: Choose AUP-ZU3 Board"
+        width={300}
+    />
+    </div>
+
+</div>
+</details>
+
+<details>
+<summary>2. Hardware Configuration</summary>
+<div class="content">
+
+Now we can add the block design! The goal here is minimal hardware, just
+enough Processing System + UART so Vitis has a place to run “Hello, World.”
+
+1. Creating the Block Design
+
+   In the flow navigator for Project Manager under IP INTEGRATOR click, `Create
+   Block Design` (or Flow Navigator → IP Integrator → Create Block Design). 
+
+2. Add the processing system
+
+   Click the Add IP button ($+$, addition sign) then search for `Zynq Ultrascale+ MPSoC`.
+   Double click it, and the huge blue block drops into the diagram.
+
+   <Figure
+        src={zynqIP}
+        alt="Zynq UltraScale+ MPSoC block added to the diagram"
+        caption="Figure 5: ZYNQ Processing System"
+        width={300}
+    />
+3. Running Block Automation
+
+    Running Block Automation. This configures the ZYNQ processor based on the
+    board file. After running block automation, connect `maxihpm0_lpd_aclk` to
+    `pl_clk0`.
+
+    <Figure
+        src={zynqCon}
+        alt="Connection diagram showing maxihpm0_lpd_aclk connected to pl_clk0"
+        caption="Figure 6: Connection"
+        width={300}
+    />
+
+4. Re-customizing the PS
+
+    Double-click the PS block to open its configuration.
+
+    * `I/O Configuration` → make sure UART0 (or UART1) is enabled
+    * Click `Switch to Advanced Mode`
+    * Go to `Advanced Configuration` → verify UART Baud Rate = 115200
+
+    <div class="figure-row">
+    <Figure
+        src={customizeIP}
+        alt="Customize IP window"
+        caption="Figure 7: Processor customization window"
+        width={300}
+    />
+    <Figure
+        src={ioConf}
+        alt="UART configuration in IO Configuration tab"
+        caption="Figure 8: Enabling UART in I/O Configuration"
+        width={320}
+    />
+    <Figure
+        src={advConf}
+        alt="Advanced Configuration showing UART settings"
+        caption="Figure 9: Setting the UART baud rate to 115200"
+        width={245}
+    />
+    </div>
+
+5. Validate the design and generate the HDL wrapper
+
+    The block design can be validated by clicking the checkmarked box. To
+    create the HDL wrapper, right click on `mcu_top` (in the Sources
+    section) then select `Create HDL Wrapper`, and click `OK` (let Vivado manage it).
+
+    <div class="figure-row">
+    <Figure
+        src={createHDLWrapper}
+        alt="Create HDL wrapper"
+        caption="Figure 10: Create HDL Wrapper"
+        width={300}
+    />
+    <Figure
+        src={createHDLWrapper2}
+        alt="Let Vivado manage wrapper option"
+        caption="Figure 11: Choose Let Vivado manage..."
+        width={340}
+    />
+    </div>
+
+    This wrapper is what gets synthesized.
+
+6. Generate Bitstream
+
+    In the `Flow Navigator` select `Generate BitStream`. Once the bitsream is
+    complete, just close the last window.
+
+    <div class="figure-row">
+    <Figure
+        src={generateBit1}
+        alt="Generate bitstream option"
+        caption="Figure 12: Generate Bitstream"
+        width={300}
+    />
+    <Figure
+        src={generateBit2}
+        alt="Bitstream complete window"
+        caption="Figure 13: Bitstream Completed"
+        width={245}
+    />
+    </div>  
+
+7. Export the hardware
+
+    The hardware design is finished, all that's left to do is to export the
+    hardware to be used in Vitis. Click File → Export → Export Hardware. Be
+    sure Include bitstream is checked.
+
+    <div class="figure-row">
+    <Figure
+        src={exportHW1}
+        alt="Export hardware menu"
+        caption="Figure 14: Export Hardware"
+        width={200}
+    />
+    <Figure
+        src={exportHW2}
+        alt="Include bitstream option"
+        caption="Figure 15: Include bitsream"
+        width={400}
+    />
+    <Figure
+        src={exportHW3}
+        alt="Export location window"
+        caption="Figure 16: Export to defualt location"
+        width={405}
+    />
+    </div>
+
+    This generates the .xsa file that Vitis will use in the next section.
+
+</div>
+</details>
+
+
+<details>
+<summary>3. Vitis Software Application</summary>
+<div class="content">
+
+Just like with Vivado, I prefer keeping everything in tidy folders.
+
+```cmd
+cd aupzu3Proj\mcu\mcu_sw
+vitis -w mcu_sw
+```
+<Figure
+    src={openVitis}
+    alt="Vitis IDE launched from terminal"
+    caption="Figure 17: Opening Vitis from the terminal"
+    width={300}
+/>
+
+Vitis should open with `mcu_sw` as the workspace.
+In the top right you should see `Welcome - mc_sw - Vitis ...`. 
+
+1. Create Platform Component
+
+    In the Welcome page click Create Platform Component (under Embedded Development).
+    Or by File → New Component → Platform. 
+
+    <Figure
+        src={platformComp}
+        alt="Vitis platform creation wizard"
+        caption="Figure 18: Creating a new Platform Component"
+        width={300}
+    />    
+
+    In the Flow section browse for the .xsa file (the exported hardware from Vivado)
+
+    <Figure
+        src={importHW}
+        alt="Window in Vitis selecting the exported XSA hardware file"
+        caption="Figure 19: Selecting the exported Vivado .xsa hardware file"
+        width={300}
+    />   
+
+    In the OS and Processor section select generate boot artifact, the OS,
+    processor, and architecture should be detected.
+
+    <Figure
+        src={platformOS}
+        alt="Vitis Platform creation window with OS and processor settings"
+        caption="Figure 20: OS and Processor settings"
+        width={300}
+    /> 
+
+    And finish, you can now check the Board Support Package.
+    
+    In the `FLOW` section of the VITIS EXPLORER click `Build` to build the platform.
+
+2. Create Embedded Application
+
+    Go back to the welcome page and click `Create Embedded Application` (under
+    Embedded Development too) and `Create Empty Embedded Application`. Or File
+    → New Component → Application.
+
+    <Figure
+        src={appCreation}
+        alt="Vitis Create Application Component window"
+        caption="Figure 21: Creating an Empty Embedded Application"
+        width={300}
+    /> 
+
+    Choose platform made
+
+    <Figure
+        src={appPlatform}
+        alt="Window showing selection of the previously created platform"
+        caption="Figure 22: Choosing the previously created Platform for the new application"
+        width={300}
+    /> 
+
+    Default domain
+
+    <Figure
+        src={appDomain}
+        alt="Application domain selection window in Vitis"
+        caption="Figure 23: Confirming the default domain for the application"
+        width={300}
+    /> 
+
+    For Add Source Files, just click Next, In Summary click Finish
+
+ 
+3. Write C program
+
+    In the VITIS EXPLORER, right click on the `src` folder of the application
+    and select `New File` to create a new file named `main.c`, and paste the
+    following program:
+
+    ```c
+    //main.c
+
+    #include "xparameters.h"
+    #include "xil_printf.h"
+    #include "sleep.h"
+
+
+    int main() {
+        xil_printf("\r\nHello World from AUP-ZU3!\r\n!!");
+
+        while(1){
+            xil_printf("Still alive...\r\n");
+            sleep(1);
+        }
+
+        return 0;
+    }
+    ```    
+    Save and build (in FLOW section) the application
+
+</div>
+</details>
+
+<details>
+<summary>4. Download and Debug</summary>
+<div class="content">
+
+1. Hardware Setup
+
+    1. Set the AUP-ZU3 boot mode to `JTAG`
+    2. Connect the  USB-C cables: `PROG UART` to laptop + `EXT PWR` to power adapter
+    3. Flip the power switch to on
+
+2. Open terminal window
+    * Baud rate: 115200
+    * Stop bits: 1
+    * Data bits: 8
+    * Parity: None
+    * Flow control: None
+
+3. In Vitis, go to the FLOW section click Run.
+
+4. Your terminal should show:
+
+    <Figure
+        src={appOut}
+        alt="UART terminal window displaying Hello World output from the AUP-ZU3"
+        caption="Figure 24: UART terminal output"
+        width={300}
+    /> 
+
+To stop the application, press the RESET button on the AUP-ZU3.
+(The UART terminal will stop receiving “Still alive...” messages.)
+
+</div>
+</details>
+
+## Final Notes
+
+Congratulations — you’ve configured the Zynq MPSoC Processing System and
+successfully ran your first application!
+
+At this point, your board is acting as a standalone microcontroller. In later
+labs, we’ll extend this setup to use external peripherals, the programmable
+logic, and interactive communication over UART.
