@@ -161,6 +161,7 @@ a:visited {
 
 }
 
+/* Collapsable sections */
   .content {
     display: none;
   }
@@ -173,10 +174,11 @@ a:visited {
     font-weight: bold;
   }
 
+/* Code blocks */
 :not(pre) > code {
-  padding: 4px;
+  padding: 2px;
   border-radius: 4px;
-  background: #e0ded8;
+  background: #f8ebc6;
   font-family: Consolas, Monaco, 'Andale Mono', monospace;
   direction: ltr;
   font-size: 14px;
@@ -197,6 +199,7 @@ html.dark :not(pre) > code {
   color: #d6deeb !important;
 }
 
+/* 3 figure row */
 .figure-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
