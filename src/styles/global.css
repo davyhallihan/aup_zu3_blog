@@ -27,7 +27,7 @@ html.dark {
   color: #e2ded3;
 }
 
-.dark .nav-links a:hover, 
+.dark .nav-links a:hover,
 .dark .nav-links a:focus {
   background-color: #082c33;
 }
@@ -35,6 +35,7 @@ html.dark {
 .dark .nav-links a {
   color: #fff;
 }
+
 body {
   margin: 0 auto;
   width: 100%;
@@ -42,15 +43,25 @@ body {
   line-height: 1.5;
 }
 
+.blog-post-content {
+  max-width: 80ch;
+  margin: 0 auto;
+}
+
 * {
   box-sizing: border-box;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #5e4f3f;
   font-family: 'Courier Prime', monospace;
 }
-html.dark h1, html.dark h2, html.dark h3 {
+
+html.dark h1,
+html.dark h2,
+html.dark h3 {
   color: #d4c6a5;
 }
 
@@ -94,6 +105,11 @@ a:visited {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.restricted-width {
+  max-width: 80ch;
+  margin: 0 auto;
 }
 
 .site-logo {
@@ -155,26 +171,28 @@ a:visited {
   }
 
   .hamburger {
-  display: none;
+    display: none;
   }
 
 }
 
 /* Collapsable sections */
-  .content {
-    display: none;
-  }
-  details[open] .content {
-    display: block;
-  }
-  summary {
-    cursor: pointer;
-    font-size: 1.5em;
-    font-weight: bold;
-  }
+.content {
+  display: none;
+}
+
+details[open] .content {
+  display: block;
+}
+
+summary {
+  cursor: pointer;
+  font-size: 1.5em;
+  font-weight: bold;
+}
 
 /* Code blocks */
-:not(pre) > code {
+:not(pre)>code {
   padding: 2px;
   border-radius: 4px;
   background: #f8ebc6;
@@ -182,7 +200,8 @@ a:visited {
   direction: ltr;
   font-size: 14px;
 }
-html.dark :not(pre) > code {
+
+html.dark :not(pre)>code {
   background: #2b2a26;
   color: #d4d3e2;
 }
@@ -192,9 +211,11 @@ html.dark :not(pre) > code {
   background-color: #f5f2f0;
   color: #000;
 }
+
 /* Code block dark mode overrides */
 .dark .astro-code {
-  background-color: #011627 !important; /* night-owl background */
+  background-color: #011627 !important;
+  /* night-owl background */
   color: #d6deeb !important;
 }
 
@@ -214,6 +235,7 @@ p {
   font-size: 1.25rem;
   line-height: 1.5;
 }
+
 .dark .description {
   font-size: 1.25rem;
   line-height: 1.5;

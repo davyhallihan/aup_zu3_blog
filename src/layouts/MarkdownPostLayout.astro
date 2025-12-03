@@ -7,22 +7,24 @@ import '../styles/tags.css';
 import Figure from '../components/Figure.astro';
 import CopyButton from '../components/CopyButton.astro';
 ---
-<BaseLayout pageTitle={frontmatter.title}>
-    <div class="tags">
-      {frontmatter.tags.map((tag: string) => (
-      <p class="tag"><a href={`${basePath}tags/${tag}/`}>{tag}</a></p>
-      ))}
-    </div>
-    <p class="description"><em>{frontmatter.description}</em></p>
-    <p>Written by {frontmatter.author} • {frontmatter.pubDate.toLocaleDateString()}</p>
-    <img src={`${basePath}${frontmatter.image.url}`} width={frontmatter.image.width} alt={frontmatter.image.alt} />
-    
-    <article>
-      <slot />
-    </article>
+<BaseLayout pageTitle={frontmatter.title} isBlogPost={true}>
+    <div class="blog-post-content">
+      <div class="tags">
+        {frontmatter.tags.map((tag: string) => (
+        <p class="tag"><a href={`${basePath}tags/${tag}/`}>{tag}</a></p>
+        ))}
+      </div>
+      <p class="description"><em>{frontmatter.description}</em></p>
+      <p>Written by {frontmatter.author} • {frontmatter.pubDate.toLocaleDateString()}</p>
+      <img src={`${basePath}${frontmatter.image.url}`} width={frontmatter.image.width} alt={frontmatter.image.alt} />
+      
+      <article>
+        <slot />
+      </article>
 
-    <!-- Copy-to-Clipboard button for code blocks -->
-    <CopyButton />
+      <!-- Copy-to-Clipboard button for code blocks -->
+      <CopyButton />
+    </div>
 </BaseLayout>
 
 <!-- KaTeX (math rendering) -->

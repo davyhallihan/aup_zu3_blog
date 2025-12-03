@@ -4,9 +4,10 @@ import Hamburger from './Hamburger.astro';
 import ThemeIcon from './ThemeIcon.astro';
 //const basePath = "/~cmuntz/";
 import { basePath } from "../config";
+const { isBlogPost } = Astro.props;
 ---
 
-<header class="site-header">
+<header class:list={["site-header", { "restricted-width": isBlogPost }]}>
   <div class="header-controls">
     <ThemeIcon />
     <Hamburger />
