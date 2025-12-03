@@ -101,6 +101,12 @@ Cards with tabs
   align-items: stretch;
   gap: 0;
   position: relative;
+  justify-content: center;
+  /* Center the content */
+  margin: 0 auto;
+  /* Center the container itself */
+  max-width: 1200px;
+  /* Optional: limit max width for better readability on large screens */
 }
 
 /* Tabs stack along the left side */
@@ -117,18 +123,41 @@ Cards with tabs
   background-color: #dce6de;
   color: #333;
   font-size: 0.75rem;
-  padding: 0.4rem 0.6rem;
-  border-radius: 0 0.25rem 0.25rem 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  /* Rounded corners on left */
   font-weight: bold;
   cursor: pointer;
   text-align: center;
   border: 1px solid #51755d;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
   transition: all 0.2s ease;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   transform: translateX(0);
   position: relative;
-  left: -1px;
+  left: 1px;
+  /* Overlap border */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  /* Fixed width for tabs */
+}
+
+.tab-image {
+  width: 100%;
+  height: 80px;
+  /* Fixed height for thumbnails */
+  object-fit: cover;
+  border-radius: 0.25rem;
+  margin-bottom: 0.25rem;
+  background-color: #dce6de;
+  /* Light Green */
+}
+
+.tab-text {
+  font-size: 0.9rem;
 }
 
 /* Selected tab style*/
@@ -141,8 +170,17 @@ Cards with tabs
   border-color: #3d5b47;
   z-index: 2;
   /* peek out from behind the card */
-  transform: translateX(1px);
+  transform: translateX(-5px);
+  /* Move left to pop out */
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+#tab1:checked~.tab-labels label[for="tab1"] .tab-image,
+#tab2:checked~.tab-labels label[for="tab2"] .tab-image,
+#tab3:checked~.tab-labels label[for="tab3"] .tab-image,
+#tab4:checked~.tab-labels label[for="tab4"] .tab-image {
+  background-color: #51755d;
+  /* Dark Green */
 }
 
 /* Ensure the panel doesn't overlap the tab visually */
