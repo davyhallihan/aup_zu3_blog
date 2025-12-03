@@ -11,24 +11,24 @@ export default defineConfig({
   base: "/~cmuntz/",
   outDir: "/home/cmuntz/public_html",
   trailingSlash: "always",
-  build: { format: "directory",},
+  build: { format: "directory", },
   server: {
-      prerender: { crawlLinks: true,},
+    prerender: { crawlLinks: true, },
   },
   markdown: {
-      remarkPlugins:[
-        remarkMath,
-      ],
-      rehypePlugins: [rehypeKatex],
-      shikiConfig:{
-        themes:{
-          light: 'monokai',
-          dark: 'night-owl',
-        },
-        wrap: false,
+    remarkPlugins: [
+      remarkMath,
+    ],
+    rehypePlugins: [rehypeKatex],
+    shikiConfig: {
+      themes: {
+        light: 'monokai',
+        dark: 'night-owl',
       },
+      wrap: false,
+    },
   },
-  integrations:[
-    icon({iconDir: 'src/icons'}), 
+  integrations: [
+    icon({ iconDir: 'src/icons' }),
     mdx()],
 });
