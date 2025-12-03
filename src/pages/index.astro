@@ -1,23 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const pageTitle = "Adaptive Computuing Field Notes";
+const pageTitle = "Adaptive Computing Field Notes";
 import { basePath } from "../config";
 ---
 
-<BaseLayout>
+<BaseLayout pageTitle={pageTitle}>
 	<div style="text-align: center;">
 		<img 
-			src={`${basePath}assets/ACFN.png`}
+			src={`${basePath}/assets/ACFNImg.png`}
 			alt="AUP-ZU3 development board close-up"
 			style="width: 60%; max-width: 200px; height: auto;" 
 		/>
 	</div>
-	<h1>The Embedded Frontier:</h1>
 	<h2>Field notes from a curious mind navigating adaptive computing.</h2>
 	<p>
 		Hello world! Join us as we explore and document our adventures with
 		hardware projects! This blog is part lab journal, part guide, and part
-		curiosity for anyone intrested in hardware, FPGA design, and tinkering
+		curiosity for anyone interested in hardware, FPGA design, and tinkering
 		within code and circuits.
 	</p>
 

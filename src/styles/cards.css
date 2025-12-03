@@ -26,7 +26,7 @@ Cards with tabs
   left: 8px;
   width: 100%;
   height: 100%;
-  background-color: #fdfcf6;
+  background-color: #021b2f;
   border: 1.5px solid rgba(0, 0, 0, 0.08);
   border-radius: 0.75rem;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
@@ -42,15 +42,14 @@ Cards with tabs
 /* Card appearance */
 .index-card {
   position: relative;
-  background-color: #fdfcf6;
-  color: #000;
-  height: 700px;
+  background-color: #081b1f;
+  color: #fff;
   height: 700px;
   width: 100%;
   overflow-y: auto;
   padding: 1.5rem;
   border-radius: 0.75rem;
-  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  border: 3px solid #51755d;
   box-shadow:
     1px 1px 0px #e0dccc,
     1px 1px 0px #e0dccc,
@@ -59,15 +58,7 @@ Cards with tabs
 }
 
 /* Lines */
-.index-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  z-index: 0;
-  pointer-events: none;
-}
+/* Lines removed */
 
 /* Red top line */
 .index-card::after {
@@ -87,7 +78,7 @@ Cards with tabs
   position: absolute;
   top: -.01rem;
   left: 1rem;
-  color: #000;
+  color: #fff;
   font-size: 0.7rem;
   padding: 0.2rem 0.6rem;
   border-radius: 0.3rem;
@@ -120,8 +111,8 @@ Cards with tabs
 }
 
 .tab-labels label {
-  background-color: #dce6de;
-  color: #333;
+  background-color: #081b1f;
+  color: #fff;
   font-size: 0.75rem;
   padding: 0.5rem;
   border-radius: 0.5rem 0 0 0.5rem;
@@ -129,7 +120,7 @@ Cards with tabs
   font-weight: bold;
   cursor: pointer;
   text-align: center;
-  border: 1px solid #51755d;
+  border: 3px solid #51755d;
   margin-bottom: 0.5rem;
   transition: all 0.2s ease;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -152,7 +143,7 @@ Cards with tabs
   object-fit: cover;
   border-radius: 0.25rem;
   margin-bottom: 0.25rem;
-  background-color: #dce6de;
+  background-color: #081b1f;
   /* Light Green */
 }
 
@@ -168,6 +159,7 @@ Cards with tabs
   background-color: #51755d;
   color: white;
   border-color: #3d5b47;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   z-index: 2;
   /* peek out from behind the card */
   transform: translateX(-5px);
@@ -185,6 +177,7 @@ Cards with tabs
 
 /* Ensure the panel doesn't overlap the tab visually */
 .card-panels {
+  flex: 1;
   position: relative;
   z-index: 1;
 }

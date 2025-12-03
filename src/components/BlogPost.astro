@@ -1,5 +1,19 @@
 ---
-const { title, url } = Astro.props;
+const { title, url, author, tags } = Astro.props;
 ---
 
-<li><a href={url}>{title}</a></li>
+<li class="blog-card">
+    <a href={url} class="blog-card-link">
+        <div class="blog-card-content">
+            <h4 class="blog-card-title">{title}</h4>
+            <div class="blog-card-meta">
+                <span class="blog-card-author">By {author}</span>
+            </div>
+            <div class="blog-card-tags">
+                {tags && tags.map((tag) => (
+                    <span class="tag-pill">{tag}</span>
+                ))}
+            </div>
+        </div>
+    </a>
+</li>

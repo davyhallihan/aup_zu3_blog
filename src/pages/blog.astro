@@ -98,6 +98,8 @@ const groupedBoards = boards.map(board => {
                       <BlogPost
                         url={`${basePath}posts/${post.id}/`}
                         title={post.data.title}
+                        author={post.data.author}
+                        tags={post.data.tags}
                       />
                     ))}
                   </ul>
