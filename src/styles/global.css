@@ -254,8 +254,8 @@ p {
 /* Blog Card Styles */
 .blog-card {
   list-style: none;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
+  background-color: #fff2de;
+  border: 1px solid #075340;
   border-radius: 8px;
   margin-bottom: 1rem;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -299,7 +299,7 @@ p {
 }
 
 .tag-pill {
-  background-color: #f0f0f0;
+  background-color: #eee1cd;
   color: #333;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
