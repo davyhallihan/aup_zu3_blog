@@ -2,9 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 const pageTitle = "Contributors";
 const contributors = [
-  { name: "Ron Sass", role: "Professor @ UNCC" },
-  { name: "Rosa Vergara", role: "CPGR M.S. '25 @ UNCC" },
-  { name: "Davy Hallihan", role: "CPGR M.S. '26 @ UNCC" },
+  { name: "Ron Sass", role: "Professor @ UNCC", email: "rsass [at] charlotte [dot] edu" },
+  { name: "Rosa Vergara", role: "CPGR M.S. '25 @ UNCC", email: "rvergar1 [at] charlotte [dot] edu" },
+  { name: "Davy Hallihan", role: "CPGR M.S. '26 @ UNCC", email: "dhalliha [at] charlotte [dot] edu" },
 ];
 ---
 
@@ -24,6 +24,7 @@ const contributors = [
         <div class="contributor-card">
           <h3 class="contributor-name">{contributor.name}</h3>
           <p class="contributor-role">{contributor.role}</p>
+          <p class="contributor-email">{contributor.email}</p>
         </div>
       ))
     }
@@ -70,10 +71,17 @@ const contributors = [
   }
 
   .contributor-role {
-    margin: 0;
+    margin: 0 0 0.5rem 0;
     color: #666;
     font-size: 0.9rem;
     font-style: italic;
+  }
+
+  .contributor-email {
+    margin: 0;
+    color: #075340;
+    font-size: 0.9rem;
+    font-family: monospace;
   }
 
   /* Dark mode overrides */
