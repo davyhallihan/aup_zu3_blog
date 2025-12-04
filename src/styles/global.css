@@ -162,6 +162,10 @@ a:visited {
   padding: 1rem;
   /* Add horizontal padding */
   width: 100%;
+  max-width: 100ch;
+  /* Constrain content width */
+  margin: 0 auto;
+  /* Center content */
 }
 
 .site-logo {
@@ -225,7 +229,8 @@ a:visited {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    background: none;
+    background-color: #51755d;
+    /* Full width green background */
     width: 100%;
     /* Full width to allow centering */
     justify-content: center;
@@ -237,8 +242,14 @@ a:visited {
   .nav-links a {
     display: inline-block;
     padding: 15px 20px;
-    color: #075340;
+    color: #fff;
+    /* White text for contrast */
     /* Default link color for desktop */
+  }
+
+  .dark .nav-links {
+    background-color: #162a31;
+    /* Darker background for dark mode */
   }
 
   .dark .nav-links a {

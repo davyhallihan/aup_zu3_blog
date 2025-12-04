@@ -49,7 +49,7 @@ Cards with tabs
   position: relative;
   background-color: #fff2de;
   color: #000;
-  min-height: 500px;
+  min-height: 600px;
   /* Use min-height instead of fixed height */
   width: 100%;
   /* overflow-y: auto; Removed to allow infinite length */
@@ -161,11 +161,11 @@ Cards with tabs
   object-fit: cover;
   border-radius: 0.25rem;
   margin-bottom: 0.25rem;
-  background-color: #dce6de;
+  /* background-color: #dce6de; Removed to match label background */
 }
 
 .dark .tab-image {
-  background-color: #081b1f;
+  /* background-color: #081b1f; Removed */
 }
 
 .tab-text {
@@ -192,8 +192,7 @@ Cards with tabs
 #tab2:checked~.tab-labels label[for="tab2"] .tab-image,
 #tab3:checked~.tab-labels label[for="tab3"] .tab-image,
 #tab4:checked~.tab-labels label[for="tab4"] .tab-image {
-  background-color: #51755d;
-  /* Dark Green */
+  /* background-color: #51755d; Removed */
 }
 
 /* Ensure the panel doesn't overlap the tab visually */
