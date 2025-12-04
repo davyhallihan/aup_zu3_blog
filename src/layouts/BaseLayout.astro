@@ -13,6 +13,15 @@ import { basePath } from "../config";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID}`}></script>
+    <script is:inline define:vars={{ googleAnalyticsId: import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', googleAnalyticsId);
+    </script>
   </head>
   <body>
     <div class="page-wrapper">
@@ -41,8 +50,18 @@ import { basePath } from "../config";
               if (details.open) {
                 const summaryText = details.querySelector("summary")?.innerText || "Unknown Section";
                 console.log(`Section expanded: ${summaryText}`);
-                // TODO: Send this event to your analytics service (e.g., Google Analytics, Plausible)
-                // Example: gtag('event', 'expand_section', { 'section_name': summaryText });
+                
+                // Use window.gtag to ensure we hit the global function
+                if (window.gtag) {
+                  console.log("Sending event to GA...");
+                  window.gtag('event', 'toggle_section', {
+                    'event_category': 'engagement',
+                    'event_label': summaryText,
+                    'page_title': document.title
+                  });
+                } else {
+                  console.error("GA gtag function not found!");
+                }
               }
             });
           });
