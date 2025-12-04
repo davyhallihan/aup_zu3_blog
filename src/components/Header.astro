@@ -9,17 +9,16 @@ const { isBlogPost } = Astro.props;
 ---
 
 <header class="site-header restricted-width">
-  <div class="header-controls">
-    <ThemeIcon />
-    <Hamburger />
-  </div>
-
-  <div class="header-main">
+  <div class="header-top-row">
     <a href={basePath}>
         <img src={`${basePath}assets/ACFNImg.png`} 
          alt="Adaptive Computing Field Notes" class="site-logo" 
         />
     </a>
-    <Navigation basePath={basePath} />
+    <div class="header-controls">
+      <ThemeIcon />
+      <Hamburger />
+    </div>
   </div>
+  <Navigation basePath={basePath} />
 </header>

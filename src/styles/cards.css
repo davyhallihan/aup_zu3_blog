@@ -49,9 +49,10 @@ Cards with tabs
   position: relative;
   background-color: #fff2de;
   color: #000;
-  height: 700px;
+  min-height: 500px;
+  /* Use min-height instead of fixed height */
   width: 100%;
-  overflow-y: auto;
+  /* overflow-y: auto; Removed to allow infinite length */
   padding: 1.5rem;
   border-radius: 0.75rem;
   border: 3px solid #51755d;
@@ -215,3 +216,50 @@ Cards with tabs
 }
 
 /***********************************/
+
+@media screen and (max-width: 1024px) {
+  .stack-tabs {
+    flex-direction: column;
+  }
+
+  .tab-labels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .tab-labels label {
+    width: 100%;
+    flex: none;
+    margin-bottom: 0;
+    left: 0;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  /* Reset selected state transforms for mobile */
+  #tab1:checked~.tab-labels label[for="tab1"],
+  #tab2:checked~.tab-labels label[for="tab2"],
+  #tab3:checked~.tab-labels label[for="tab3"],
+  #tab4:checked~.tab-labels label[for="tab4"] {
+    transform: none;
+    border-radius: 0.5rem;
+    box-shadow: none;
+    background-color: #51755d;
+    color: white;
+  }
+
+  .tab-image {
+    height: auto;
+    /* Allow full image to be shown */
+    max-height: 150px;
+    /* Cap height just in case */
+    object-fit: contain;
+    /* Ensure image is not cropped */
+  }
+}

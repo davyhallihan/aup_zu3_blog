@@ -5,11 +5,11 @@ import { basePath } from "../config";
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-	<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+	<div class="home-content">
 		<img 
 			src={`${basePath}/assets/ACFNImg.png`}
 			alt="AUP-ZU3 development board close-up"
-			style="width: 60%; max-width: 200px; height: auto;" 
+			class="home-image"
 		/>
 		<h2>Field notes from a curious mind navigating adaptive computing.</h2>
 		<p>
@@ -19,5 +19,33 @@ import { basePath } from "../config";
 			within code and circuits.
 		</p>
 	</div>
+
+	<style>
+		.home-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			width: 100%; /* Ensure full width */
+		}
+
+		.home-image {
+			width: 60%;
+			max-width: 200px;
+			height: auto;
+			margin-bottom: 2rem;
+		}
+
+		/* Override align-items for text elements to allow them to fill width if needed, 
+		   but keeping them centered via text-align is usually enough. 
+		   However, to prevent the "squashed" look, we ensure the container is wide.
+		*/
+		
+		p {
+			max-width: 60ch; /* Optimal reading width */
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
 
 </BaseLayout>
