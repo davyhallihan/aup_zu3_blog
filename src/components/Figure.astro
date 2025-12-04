@@ -48,7 +48,7 @@ const hrefLink = (() => {
   <a href={hrefLink} target="_blank">
     {hoverSrc && hoverSrc !== src ? (
       isVideo ? (
-        <div class="video-wrapper" style={`max-width:${maxWidth}; width:${maxWidth};`}>
+        <div class="video-wrapper" style={`max-width:${maxWidth}; width: 100%;`}>
           <video
             src={hoverSrc}
             muted
@@ -60,7 +60,7 @@ const hrefLink = (() => {
           <img src={src} alt={alt} class="still" loading="lazy" />
         </div>
       ) : (
-        <div class="hover-wrapper" style={`max-width:${maxWidth}; width:${maxWidth};`}>
+        <div class="hover-wrapper" style={`max-width:${maxWidth}; width: 100%;`}>
           <img src={src} alt={alt} class="still" loading="lazy" />
           <img src={hoverSrc} alt="" aria-hidden="true" class="hover" />
         </div>
@@ -69,7 +69,7 @@ const hrefLink = (() => {
       <img
         src={src}
         alt={alt}
-        style={`max-width:${maxWidth}; width:${maxWidth}; height:auto;`}
+        style={`max-width:${maxWidth}; width: 100%; height:auto;`}
         loading="lazy"
       />
     )}
