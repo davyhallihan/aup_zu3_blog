@@ -1,68 +1,51 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPost from "../../components/BlogPost.astro";
 import { basePath } from "../../config";
 
 //get all posts
 const allPosts = await getCollection("blog");
 //filter out drafts
 const publishedPosts = allPosts.filter(post => !post.data.draft);
-//map to count how many times each tag appears
-const tagMap = new Map();
 
-//going through each published post
+// Group posts by tag
+const postsByTag = new Map();
+
 for (const post of publishedPosts) {
-  //gets tags from post
   const tags = post.data.tags || [];
-  //incrementing each tag count
   for (const tag of tags) {
-    tagMap.set(tag, (tagMap.get(tag) || 0) + 1);
+    if (!postsByTag.has(tag)) {
+      postsByTag.set(tag, []);
+    }
+    postsByTag.get(tag).push(post);
   }
 }
-//array for tags [name, count]
-const tags = Array.from(tagMap.entries()).map(([name, count]) => ({ name, count }));const pageTitle = "Tag Index";
+
+// Convert map to array and sort alphabetically by tag name
+const sortedTags = Array.from(postsByTag.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+const pageTitle = "Tag Index";
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-    {tags.map((tag) => (    
-    <div class="tag">
-        <a href={`${basePath}tags/${tag.name}/`}>{tag.name}</a>
-        <span class="tag-count">{tag.count}</span>
+<BaseLayout pageTitle={pageTitle} isBlogPost={true}>
+    <div class="restricted-width">
+        {sortedTags.map(([tag, posts]) => (
+            <details>
+                <summary>{tag} ({posts.length})</summary>
+                <div class="content">
+                    <ul>
+                        {posts.map((post) => (
+                            <BlogPost 
+                                url={`${basePath}posts/${post.id}/`} 
+                                title={post.data.title} 
+                                author={post.data.author}
+                                tags={post.data.tags}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            </details>
+        ))}
     </div>
-    ))}    
-    <style>
-        /* Rows */
-        .tag {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #51755d;
-            border: 2px solid #3a4f40;
-            padding: 0.4em 1em;
-            font-size: 1em;
-            font-weight: bold;
-            color: #fff;
-            display: flex;
-            text-decoration: none;
-            align-items: center;
-            transition: background-color 0.2s ease;
-        }
-        .tag a {
-            color: #ebe1ca;
-            text-decoration: none;
-            flex-grow: 1;
-        }
-        /* The circle (encasing the post count) */
-        .tag-count {
-            background-color: #3d5b47;
-            border-radius: 999px;
-            padding: 0.3em 0.75em;
-            font-size: 0.85em;
-            margin-left: 1em;
-        }
-        /* Hovering over rows */
-        .tag:hover {
-            background-color: #3d5b47;
-        }
-        </style>
 </BaseLayout>

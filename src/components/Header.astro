@@ -8,7 +8,7 @@ import { basePath } from "../config";
 const { isBlogPost } = Astro.props;
 ---
 
-<header class:list={["site-header", { "restricted-width": isBlogPost }]}>
+<header class="site-header restricted-width">
   <div class="header-controls">
     <ThemeIcon />
     <Hamburger />

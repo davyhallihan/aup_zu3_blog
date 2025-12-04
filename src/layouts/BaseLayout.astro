@@ -26,11 +26,11 @@ import { basePath } from "../config";
   <body>
     <div class="page-wrapper">
       <main>
-        <Header isBlogPost={isBlogPost} />
-        <div class:list={[{ "restricted-width": isBlogPost }]}>
+        <Header />
+        <div class="restricted-width">
           <h1>{pageTitle}</h1>
+          <slot />
         </div>
-        <slot />
       </main>
       <Footer />
       <script>

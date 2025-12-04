@@ -43,12 +43,16 @@ posts = posts.sort((a, b) => {
 });
 ---
 
-<BaseLayout pageTitle={tag}>
-  <p>Posts tagged with {tag}</p>
-  <ul>
-    { posts.map((post) => <BlogPost 
-                          url={`${basePath}posts/${post.id}/`} 
-                          title={post.data.title} 
-                          />) }
-  </ul>
+<BaseLayout pageTitle={tag} isBlogPost={true}>
+  <div class="restricted-width">
+    <p>Posts tagged with {tag}</p>
+    <ul>
+      { posts.map((post) => <BlogPost 
+                            url={`${basePath}posts/${post.id}/`} 
+                            title={post.data.title} 
+                            author={post.data.author}
+                            tags={post.data.tags}
+                            />) }
+    </ul>
+  </div>
 </BaseLayout>
