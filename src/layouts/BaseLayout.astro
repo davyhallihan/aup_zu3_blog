@@ -33,6 +33,19 @@ import { basePath } from "../config";
             link.setAttribute("target", "_blank");
             link.setAttribute("rel", "noopener noreferrer");
           });
+
+          // Track expandable section toggles
+          const detailsElements = document.querySelectorAll("details");
+          detailsElements.forEach(details => {
+            details.addEventListener("toggle", (event) => {
+              if (details.open) {
+                const summaryText = details.querySelector("summary")?.innerText || "Unknown Section";
+                console.log(`Section expanded: ${summaryText}`);
+                // TODO: Send this event to your analytics service (e.g., Google Analytics, Plausible)
+                // Example: gtag('event', 'expand_section', { 'section_name': summaryText });
+              }
+            });
+          });
         });
       </script>
     </div>
