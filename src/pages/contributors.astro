@@ -1,13 +1,93 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 const pageTitle = "Contributors";
+const contributors = [
+  { name: "Ron Sass", role: "Professor @ UNCC" },
+  { name: "Rosa Vergara", role: "CPGR M.S. '25 @ UNCC" },
+  { name: "Davy Hallihan", role: "CPGR M.S. '26 @ UNCC" },
+];
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-<p>This project started as Rosa V.'s Graduate Project at UNCC ECE and has continued to be updated by the graduate students under Ron Sass's RCS lab! Thank you to everyone contributing to public education for reconfigurable computing!</p>
-<ul>
-<li>Ron Sass</li>
-<li>Rosa V.</li>
-<li>Davy H.</li>
-</ul>
+  <div class="contributor-intro">
+    <p>
+      This project started as Rosa Vergara's Graduate Project at UNCC ECE and has
+      continued to be updated by the graduate students under Ron Sass's RCS lab!
+      Thank you to everyone contributing to public education for reconfigurable
+      computing!
+    </p>
+  </div>
+
+  <div class="contributor-grid">
+    {
+      contributors.map((contributor) => (
+        <div class="contributor-card">
+          <h3 class="contributor-name">{contributor.name}</h3>
+          <p class="contributor-role">{contributor.role}</p>
+        </div>
+      ))
+    }
+  </div>
 </BaseLayout>
+
+<style>
+  .contributor-intro {
+    max-width: 70ch;
+    margin: 0 auto 3rem auto;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .contributor-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .contributor-card {
+    background-color: #fff2de;
+    border: 1px solid #075340;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    min-width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+
+  .contributor-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .contributor-name {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.25rem;
+  }
+
+  .contributor-role {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  /* Dark mode overrides */
+  :global(.dark) .contributor-card {
+    background-color: #081b1f;
+    border-color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(.dark) .contributor-name {
+    color: #e0e0e0;
+  }
+
+  :global(.dark) .contributor-role {
+    color: #aaa;
+  }
+</style>
